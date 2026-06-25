@@ -1,10 +1,9 @@
 # AgentOrchestrator
 
-一个 Agent 编排框架，Python 写推理核心，Java Spring Boot 做管理后台，用 REST API 把两部分连起来。支持 Tool Calling、多 Agent 工作流、RAG 记忆。
+一个 Agent 编排框架，Python FastAPI 做推理核心，Streamlit 做可视化仪表盘。支持 Tool Calling、多 Agent 工作流、RAG 记忆。
 
 [![CI](https://github.com/JING04-PRODUCER/agent-orchestrator/actions/workflows/python-test.yml/badge.svg)](https://github.com/JING04-PRODUCER/agent-orchestrator/actions/workflows/python-test.yml)
 [![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
-[![Java](https://img.shields.io/badge/java-17-orange.svg)](https://adoptium.net/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## 为什么写这个
@@ -15,7 +14,7 @@ LangChain 和 LangGraph 概念太多，学起来费劲。CrewAI 功能全但太�
 
 ## 跑起来
 
-需要 Python 3.10+。如果要跑 Streamlit 仪表盘，还需要 Java 17+（或用 Docker 跳过）。
+需要 Python 3.10+。
 
 ```bash
 git clone https://github.com/JING04-PRODUCER/agent-orchestrator.git
