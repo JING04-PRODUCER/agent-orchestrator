@@ -15,7 +15,7 @@ LangChain 和 LangGraph 概念太多，学起来费劲。CrewAI 功能全但太�
 
 ## 跑起来
 
-需要 Python 3.12+、Java 21+。
+需要 Python 3.10+。如果要跑 Streamlit 仪表盘，还需要 Java 17+（或用 Docker 跳过）。
 
 ```bash
 git clone https://github.com/JING04-PRODUCER/agent-orchestrator.git
@@ -24,7 +24,6 @@ cp .env.example .env   # 填上你的 OPENAI_API_KEY
 docker compose up -d
 
 curl http://localhost:8000/health
-curl http://localhost:9090/api/admin/health
 ```
 
 不用 Docker 的话：
@@ -34,8 +33,10 @@ cd agent-core
 pip install -r requirements.txt
 python main.py          # Agent Core → :8000
 
-cd admin-server
-./mvnw spring-boot:run  # Admin Server → :9090
+# 可选：Streamlit 仪表盘
+cd dashboard
+pip install -r requirements.txt
+streamlit run app.py    # 仪表盘 → :8501
 ```
 
 ## 怎么用
@@ -44,7 +45,7 @@ cd admin-server
 
 ```bash
 # 创建一个代码审查 Agent
-curl -X POST http://localhost:8000/api/agents \
+curl -X POST http://localhost:8000/agents \
   -H "Content-Type: application/json" \
   -d '{
     "name": "code-reviewer",
@@ -54,18 +55,18 @@ curl -X POST http://localhost:8000/api/agents \
   }'
 
 # 让它审查代码
-curl -X POST http://localhost:8000/api/agents/code-reviewer/run \
+curl -X POST http://localhost:8000/agents/code-reviewer/run \
   -H "Content-Type: application/json" \
   -d '{"task": "检查 app.py 有没有 SQL 注入和 XSS 漏洞"}'
 
-# 查看结果
-curl http://localhost:8000/api/agents/code-reviewer/status
+# 查看所有已创建的 Agent
+curl http://localhost:8000/agents
 ```
 
 多个 Agent 可以串成工作流：
 
 ```bash
-curl -X POST http://localhost:8000/api/workflows \
+curl -X POST http://localhost:8000/workflows \
   -H "Content-Type: application/json" \
   -d '{
     "agents": ["analyzer", "code-reviewer", "tester"],
@@ -74,7 +75,7 @@ curl -X POST http://localhost:8000/api/workflows \
   }'
 ```
 
-管理后台在 `http://localhost:9090`，可以看到所有 Agent 的状态和任务执行情况。
+Streamlit 仪表盘在 `docker compose up -d` 后可访问 `http://localhost:8501`。
 
 ## 内置工具
 
@@ -90,11 +91,11 @@ curl -X POST http://localhost:8000/api/workflows \
 ## 架构
 
 ```
-Admin Server (Spring Boot, :9090)  ← 管理后台
+Streamlit Dashboard (:8501)        ← 可视化仪表盘
         ↓ REST API
-Agent Core (Python FastAPI, :8000) ← 推理引擎
+Agent Core (Python FastAPI, :8000) ← 推理引擎 + Tool Calling 循环
         ↓
-OpenAI 兼容 API · 本地工具 · PostgreSQL + Redis
+OpenAI 兼容 API · 本地工具 · 内存存储(RAG)
 ```
 
 ## 已知问题
