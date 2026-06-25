@@ -1,6 +1,6 @@
 [project]
 name = "agent-orchestrator"
-version = "0.1.0"
+version = "0.4.0"
 description = "Multi-Agent orchestration engine with DAG workflow, tool registry, and LLM integration"
 readme = "README.md"
 license = {text = "MIT"}

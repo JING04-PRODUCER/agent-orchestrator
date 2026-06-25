@@ -11,7 +11,7 @@ from functools import lru_cache
 class Settings(BaseSettings):
     # 应用
     app_name: str = "AgentOrchestrator"
-    app_version: str = "0.1.0"
+    app_version: str = "0.4.0"
     debug: bool = False
 
     # 数据库

@@ -9,20 +9,14 @@ cd agent-orchestrator
 # Agent Core (Python)
 cd agent-core
 pip install -r requirements.txt
-
-# Admin Server (Java)
-cd admin-server
-./mvnw spring-boot:run
+uvicorn main:app --reload
 ```
 
 ## Development
 
 ```bash
-# Agent core tests
+# Run tests
 cd agent-core && pytest tests/ -v
-
-# Admin server tests
-cd admin-server && ./mvnw test
 ```
 
 ## Adding Custom Tools

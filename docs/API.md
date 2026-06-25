@@ -120,36 +120,9 @@ Content-Type: application/json
 
 ---
 
-## Admin Server (Java Spring Boot) — port 9090
+## Streamlit Dashboard — port 8501
 
-### 管理后台健康检查
-
-```http
-GET /api/admin/health
-```
-
-响应:
-```json
-{
-  "admin_server": "ok",
-  "agent_core": {"status": "ok", "version": "0.1.0"}
-}
-```
-
-### Agent 管理 (透传 Python Core)
-
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| POST | `/api/admin/agents` | 创建 Agent |
-| GET | `/api/admin/agents` | 列出所有 Agent |
-| POST | `/api/admin/agents/{name}/run` | 执行 Agent 任务 |
-| DELETE | `/api/admin/agents/{name}` | 删除 Agent |
-
-### 工具查询
-
-```http
-GET /api/admin/tools?category=file
-```
+可视化仪表盘，查看 Agent 状态、任务执行情况。通过 Docker Compose 或手动 `streamlit run dashboard/app.py` 启动。
 
 ---
 

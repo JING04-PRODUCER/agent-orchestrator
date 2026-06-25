@@ -2,7 +2,7 @@
 
 ## 设计目标
 
-1. **跨语言协作**：Python 负责性能敏感的 LLM 推理，Java 提供企业级后台管理
+1. **Python 全栈**：FastAPI 负责 LLM 推理核心，Streamlit 提供可视化仪表盘
 2. **插件化工具**：工具按分类注册，Agent 按需挂载，支持热扩展
 3. **容错设计**：工具调用内置超时 + 指数退避重试，避免单点故障
 4. **工作流编排**：支持顺序、并行、DAG 三种多 Agent 协作模式
@@ -51,14 +51,12 @@ WorkflowEngine
       └── WorkflowStep { agent, depends_on[], step_name }
 ```
 
-### 4. 管理后台 (`admin-server/`)
+### 4. 仪表盘 (`dashboard/`)
 
-Spring Boot 作为管理入口，通过 REST 与 Python 推理核心通信：
+Streamlit 可视化仪表盘，通过 REST 与 Python 推理核心通信：
 
 ```
-AdminController → AgentService → RestTemplate → Python AgentCore
-     ↓                                       ↓
-   PostgreSQL (Agent元数据)               内存 (Agent运行时)
+Dashboard (Streamlit) → REST API → Python AgentCore
 ```
 
 ## 数据流
